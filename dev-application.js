@@ -1,5 +1,10 @@
 var DevApplication = (function () {
-    var _canInit = true;
+    var statusFlag = 0;
+
+    const FLAG_INIT   = 00000001;
+    const FLAG_START  = 00000010;
+    const FLAG_ADD_CV = 00000100;
+    const FLAG_FINISH = 00001000;
 
     var _options = {
         messages: {
@@ -9,7 +14,7 @@ var DevApplication = (function () {
             },
             about: ['Thanks for using DevApplication. Please start your application.'],
             error: {
-                finish: 'Already? There are still few steps left.'
+                finish: 'Already? There are still few steps left.',
                 default: ['Hold on. You took a wrong turn.']
             },
             success: {
@@ -104,7 +109,7 @@ var DevApplication = (function () {
 
     return {
         init: function (options) {
-            if (!_canInit) {
+            if (statusFlag & FLAG_INIT) {
                 _printError();
                 return;
             }
@@ -117,7 +122,7 @@ var DevApplication = (function () {
             _printMessages(_options.messages.welcome.content);
             console.log(this);
 
-            _canInit = false;
+            statusFlag |= FLAG_INIT;
         },
         about: function () {
             _printMessages(_options.messages.about);
@@ -126,7 +131,9 @@ var DevApplication = (function () {
             _printSuccess(_options.messages.success.start);
         },
         finish: function () {
-
+            if (!_canFinish()) {
+                _printError('');
+            }
         },
     };
 })();

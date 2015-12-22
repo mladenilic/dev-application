@@ -9,11 +9,7 @@ var DevApplication = (function () {
             },
             about: ['Thanks for using DevApplication'],
             error: {
-                default: [
-                    'Hold on. You took a wrong turn.',
-                    'No, no, no',
-                    'Ain\'t gonna happen'
-                ]
+                default: ['Hold on. You took a wrong turn.']
             }
         },
         styles: {

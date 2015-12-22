@@ -14,6 +14,7 @@ var DevApplication = (function () {
             },
             about: ['Thanks for using DevApplication. Please start your application.'],
             error: {
+                start: 'Again?',
                 finish: 'Already? There are still few steps left.',
                 default: ['Hold on. You took a wrong turn.']
             },
@@ -128,7 +129,13 @@ var DevApplication = (function () {
             _printMessages(_options.messages.about);
         },
         start: function () {
+            if (statusFlag & FLAG_START) {
+                _printError(_options.messages.error.start);
+                return;
+            }
+
             _printSuccess(_options.messages.success.start);
+            statusFlag |= FLAG_START;
         },
         finish: function () {
             if (!_canFinish()) {

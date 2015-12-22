@@ -1,10 +1,13 @@
 var DevApplication = (function () {
-    var statusFlag = 0;
+    var statusFlag = 0, data = {};
 
-    const FLAG_INIT   = 00000001;
-    const FLAG_START  = 00000010;
-    const FLAG_ADD_CV = 00000100;
-    const FLAG_FINISH = 00001000;
+    const FLAG_INIT   = 0b00000001;
+    const FLAG_START  = 0b00000010;
+    const FLAG_ADD_CV = 0b00000100;
+    const FLAG_FINISH = 0b00001000;
+
+    const FLAG_CAN_ADD_CV = FLAG_INIT | FLAG_START;
+    const FLAG_CAN_FINISH = FLAG_CAN_ADD_CV | FLAG_ADD_CV;
 
     var _options = {
         messages: {
@@ -14,12 +17,17 @@ var DevApplication = (function () {
             },
             about: ['Thanks for using DevApplication. Please start your application.'],
             error: {
-                start: 'Again?',
+                start: 'Please start application first.',
+                started: 'Again?',
+                cv: 'Not a valid CV url.',
                 finish: 'Already? There are still few steps left.',
+                finished: 'Your application has already been sent.',
                 default: ['Hold on. You took a wrong turn.']
             },
             success: {
-                start: 'First step completed! Please add your CV.',
+                start: 'First step completed! Please add url to your CV.',
+                cv: 'CV added! Please finish your application.',
+                finish: 'Hooray! Aplication has been set.',
                 default: ['Success!']
             }
         },
@@ -130,17 +138,43 @@ var DevApplication = (function () {
         },
         start: function () {
             if (statusFlag & FLAG_START) {
-                _printError(_options.messages.error.start);
+                _printError(_options.messages.error.started);
                 return;
             }
 
             _printSuccess(_options.messages.success.start);
             statusFlag |= FLAG_START;
         },
-        finish: function () {
-            if (!_canFinish()) {
-                _printError('');
+        addCv: function (url) {
+            if ((statusFlag & FLAG_CAN_ADD_CV) !== FLAG_CAN_ADD_CV) {
+                _printError(_options.messages.error.start);
+                return;
             }
+
+            data.cv = url;
+
+            if (!data.cv) {
+               _printError(_options.messages.error.cv);
+               statusFlag &= ~FLAG_ADD_CV;
+               return;
+            }
+
+            _printSuccess(_options.messages.success.cv);
+            statusFlag |= FLAG_ADD_CV;
         },
+        finish: function () {
+            if ((statusFlag & FLAG_CAN_FINISH) !== FLAG_CAN_FINISH) {
+                _printError(_options.messages.error.finish);
+                return;
+            }
+
+            if (statusFlag & FLAG_FINISH) {
+                _printError(_options.messages.error.finished);
+                return;
+            }
+
+            _printSuccess(_options.messages.success.finish);
+            statusFlag |= FLAG_FINISH;
+        }
     };
 })();

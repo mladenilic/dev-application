@@ -1,42 +1,4 @@
 var DevApplication = (function () {
-
-    var Message = (function () {
-
-        var Message = function () {
-            var _text = '', styles = {};
-
-            this.print = function () {
-                var computedStyles = '';
-                for (var i in styles) {
-                    computedStyles += i + ': ' + styles[i] + ';';
-                }
-
-                console.log('%c' + _text, computedStyles);
-
-                return this;
-            };
-
-            this.text = function (text) {
-                _text = text;
-
-                return this;
-            };
-
-            this.style = function (key, value) {
-                styles[key] = value;
-
-                return this;
-            };
-        };
-
-        return {
-            new: function () {
-                return new Message();
-            }
-        }
-
-    })();
-
     var Config = (function () {
 
         var config = {
@@ -93,6 +55,43 @@ var DevApplication = (function () {
                 config = merge(config, options);
             },
             data: config
+        }
+
+    })();
+
+    var Message = (function () {
+
+        var Message = function () {
+            var _text = '', styles = {};
+
+            this.print = function () {
+                var computedStyles = '';
+                for (var i in styles) {
+                    computedStyles += i + ': ' + styles[i] + ';';
+                }
+
+                console.log('%c' + _text, computedStyles);
+
+                return this;
+            };
+
+            this.text = function (text) {
+                _text = text;
+
+                return this;
+            };
+
+            this.style = function (key, value) {
+                styles[key] = value;
+
+                return this;
+            };
+        };
+
+        return {
+            new: function () {
+                return new Message();
+            }
         }
 
     })();

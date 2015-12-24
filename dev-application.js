@@ -192,7 +192,6 @@ var DevApplication = (function () {
 
         _printTitle(Config.data.messages.welcome.title);
         _printMessages(Config.data.messages.welcome.content);
-        console.log(this);
 
         statusFlag |= FLAG_INIT;
     }

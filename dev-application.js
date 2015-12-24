@@ -62,30 +62,36 @@ var DevApplication = (function () {
     var Message = (function () {
 
         var Message = function () {
-            var _text = '', styles = {};
+            var defaultText = '', messageStyles = {};
 
-            this.print = function () {
+            this.print = function (text) {
                 var computedStyles = '';
-                for (var i in styles) {
-                    computedStyles += i + ': ' + styles[i] + ';';
+                for (var i in messageStyles) {
+                    computedStyles += i + ': ' + messageStyles[i] + ';';
                 }
 
-                console.log('%c' + _text, computedStyles);
+                console.log('%c' + text || defaultText, computedStyles);
 
                 return this;
             };
 
             this.text = function (text) {
-                _text = text;
+                defaultText = text;
 
                 return this;
             };
 
             this.style = function (key, value) {
-                styles[key] = value;
+                messageStyles[key] = value;
 
                 return this;
             };
+
+            this.styles = function (styles) {
+                messageStyles = styles;
+
+                return this;
+            }
         };
 
         return {
@@ -108,37 +114,37 @@ var DevApplication = (function () {
         const FLAG_CAN_FINISH = FLAG_CAN_ADD_CV | FLAG_ADD_CV;
 
         var _printTitle = function (title) {
-            Message.new()
-                .text(title)
-                .style('color', Config.data.styles.color.title)
+            Message.new().style('color', Config.data.styles.color.title)
                 .style('font-size', Config.data.styles.size.title)
-                .print();
+                .print(title);
         };
 
         var _printMessages = function (messages) {
-            var message = Message.new()
-                .style('color', Config.data.styles.color.default)
-                .style('font-size', Config.data.styles.size.default);
+            var message = Message.new().styles({
+                'color': Config.data.styles.color.default,
+                'font-size': Config.data.styles.size.default
+            });
 
             for (var i = 0; i < messages.length; i++) {
-                message.text(messages[i]).print();
+                message.print(messages[i]);
             };
         };
 
         var _printError = function (message) {
             var errorMessages = Config.data.messages.error.default;
-            Message.new().text(message || errorMessages[Math.floor(Math.random() * errorMessages.length)])
-                .style('color', Config.data.styles.color.error)
-                .style('font-size', Config.data.styles.size.default)
-                .print();
+            Message.new().styles({
+                'color': Config.data.styles.color.error,
+                'font-size': Config.data.styles.size.default
+            }).print(message || errorMessages[Math.floor(Math.random() * errorMessages.length)]);
         }
 
         var _printSuccess = function (message) {
             var successMessages = Config.data.messages.success.default;
-            Message.new().text(message || successMessages[Math.floor(Math.random() * successMessages.length)])
-                .style('color', Config.data.styles.color.success)
-                .style('font-size', Config.data.styles.size.default)
-                .print();
+            Message.new().styles({
+                'color': Config.data.styles.color.success,
+                'font-size': Config.data.styles.size.default
+            })
+            .print(message || successMessages[Math.floor(Math.random() * successMessages.length)]);
         }
 
         this.about = function () {

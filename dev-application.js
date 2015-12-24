@@ -37,18 +37,9 @@ var DevApplication = (function () {
 
     })();
 
-    return function (options) {
-        var statusFlag = 0, data = {};
+    var Config = (function () {
 
-        const FLAG_INIT   = 0b00000001;
-        const FLAG_START  = 0b00000010;
-        const FLAG_ADD_CV = 0b00000100;
-        const FLAG_FINISH = 0b00001000;
-
-        const FLAG_CAN_ADD_CV = FLAG_INIT | FLAG_START;
-        const FLAG_CAN_FINISH = FLAG_CAN_ADD_CV | FLAG_ADD_CV;
-
-        var _options = {
+        var config = {
             messages: {
                 welcome: {
                     title: '<3 web development? start a DevApplication',
@@ -84,22 +75,51 @@ var DevApplication = (function () {
             }
         };
 
-        for (var i in options) {
-            _options[i] = options[i];
+        var merge = function(dest, src) {
+            for (var property in src) {
+                if (src[property] && src[property].constructor && src[property].constructor === Object) {
+                  dest[property] = dest[property] || {};
+                  arguments.callee(dest[property], src[property]);
+                } else {
+                  dest[property] = src[property];
+                }
+            }
+
+            return dest;
+        };
+
+        return {
+            init: function (options) {
+                config = merge(config, options);
+            },
+            data: config
         }
+
+    })();
+
+    return function (options) {
+        var statusFlag = 0, data = {};
+
+        const FLAG_INIT   = 0b00000001;
+        const FLAG_START  = 0b00000010;
+        const FLAG_ADD_CV = 0b00000100;
+        const FLAG_FINISH = 0b00001000;
+
+        const FLAG_CAN_ADD_CV = FLAG_INIT | FLAG_START;
+        const FLAG_CAN_FINISH = FLAG_CAN_ADD_CV | FLAG_ADD_CV;
 
         var _printTitle = function (title) {
             Message.new()
                 .text(title)
-                .style('color', _options.styles.color.title)
-                .style('font-size', _options.styles.size.title)
+                .style('color', Config.data.styles.color.title)
+                .style('font-size', Config.data.styles.size.title)
                 .print();
         };
 
         var _printMessages = function (messages) {
             var message = Message.new()
-                .style('color', _options.styles.color.default)
-                .style('font-size', _options.styles.size.default);
+                .style('color', Config.data.styles.color.default)
+                .style('font-size', Config.data.styles.size.default);
 
             for (var i = 0; i < messages.length; i++) {
                 message.text(messages[i]).print();
@@ -107,70 +127,72 @@ var DevApplication = (function () {
         };
 
         var _printError = function (message) {
-            var errorMessages = _options.messages.error.default;
+            var errorMessages = Config.data.messages.error.default;
             Message.new().text(message || errorMessages[Math.floor(Math.random() * errorMessages.length)])
-                .style('color', _options.styles.color.error)
-                .style('font-size', _options.styles.size.default)
+                .style('color', Config.data.styles.color.error)
+                .style('font-size', Config.data.styles.size.default)
                 .print();
         }
 
         var _printSuccess = function (message) {
-            var successMessages = _options.messages.success.default;
+            var successMessages = Config.data.messages.success.default;
             Message.new().text(message || successMessages[Math.floor(Math.random() * successMessages.length)])
-                .style('color', _options.styles.color.success)
-                .style('font-size', _options.styles.size.default)
+                .style('color', Config.data.styles.color.success)
+                .style('font-size', Config.data.styles.size.default)
                 .print();
         }
 
         this.about = function () {
-            _printMessages(_options.messages.about);
+            _printMessages(Config.data.messages.about);
         };
 
         this.start = function () {
             if (statusFlag & FLAG_START) {
-                _printError(_options.messages.error.started);
+                _printError(Config.data.messages.error.started);
                 return;
             }
 
-            _printSuccess(_options.messages.success.start);
+            _printSuccess(Config.data.messages.success.start);
             statusFlag |= FLAG_START;
         };
 
         this.addCv = function (url) {
             if ((statusFlag & FLAG_CAN_ADD_CV) !== FLAG_CAN_ADD_CV) {
-                _printError(_options.messages.error.start);
+                _printError(Config.data.messages.error.start);
                 return;
             }
 
             data.cv = url;
 
             if (!data.cv) {
-               _printError(_options.messages.error.cv);
+               _printError(Config.data.messages.error.cv);
                statusFlag &= ~FLAG_ADD_CV;
                return;
             }
 
-            _printSuccess(_options.messages.success.cv);
+            _printSuccess(Config.data.messages.success.cv);
             statusFlag |= FLAG_ADD_CV;
         };
 
         this.finish = function () {
             if ((statusFlag & FLAG_CAN_FINISH) !== FLAG_CAN_FINISH) {
-                _printError(_options.messages.error.finish);
+                _printError(Config.data.messages.error.finish);
                 return;
             }
 
             if (statusFlag & FLAG_FINISH) {
-                _printError(_options.messages.error.finished);
+                _printError(Config.data.messages.error.finished);
                 return;
             }
 
-            _printSuccess(_options.messages.success.finish);
+            _printSuccess(Config.data.messages.success.finish);
             statusFlag |= FLAG_FINISH;
         };
 
-        _printTitle(_options.messages.welcome.title);
-        _printMessages(_options.messages.welcome.content);
+        Config.init(options);
+
+        _printTitle(Config.data.messages.welcome.title);
+        _printMessages(Config.data.messages.welcome.content);
         console.log(this);
 
         statusFlag |= FLAG_INIT;

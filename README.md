@@ -16,6 +16,18 @@ All you need to do is include ```dev-application.js``` into your website header 
 
 Everything else is handled by "Dev Application".
 
-Examples are coming soon.
+## Please follow these examples in order to use and customise output
+
+### Initialise app and customise welcome message
+```
+var AcmeApplication = new DevApplication({
+    messages: {
+        welcome: {
+            title: 'Welcome to Acme Inc. We are looking for you. Are you willing to learn how deep is the rabbit hole?',
+            content: ['Type AcmeApplication.about(); into your console to find out more']
+        }
+    }
+});
+```
 
 To stay up to date - _Click "Watch" in top right corner._

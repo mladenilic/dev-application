@@ -190,24 +190,29 @@ var DevApplication = (function () {
                 return;
             }
 
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (4 === xhr.readyState) {
-                  if (200 === xhr.status) {
-                    if (xhr.responseText) {
-                        _printSuccess(xhr.responseText);
+            if (Config.data.submitPath) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (4 === xhr.readyState) {
+                      if (200 === xhr.status) {
+                        if (xhr.responseText) {
+                            _printSuccess(xhr.responseText);
+                        }
+
+                        _printSuccess(Config.data.messages.success.finish);
+                      } else {
+
+                      }
                     }
+                };
+                xhr.open('POST', Config.data.submitPath);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                xhr.send(encodeURI('cv=' + data.cv));
+            } else {
+                _printSuccess(Config.data.messages.success.finish);
+            }
 
-                    _printSuccess(Config.data.messages.success.finish);
-                    statusFlag |= FLAG_FINISH;
-                  } else {
-
-                  }
-                }
-            };
-            xhr.open('POST', Config.data.submitPath);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-            xhr.send(encodeURI('cv=' + data.cv));
+            statusFlag |= FLAG_FINISH;
         };
 
         Config.init(options);

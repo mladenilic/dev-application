@@ -59,6 +59,57 @@ var DevApplication = (function () {
 
     })();
 
+    var Request = (function () {
+
+        var params = function (object) {
+            var encodedString = '';
+            for (var prop in object) {
+                if (object.hasOwnProperty(prop)) {
+                    if (encodedString.length > 0) {
+                        encodedString += '&';
+                    }
+                    encodedString += encodeURI(prop + '=' + object[prop]);
+                }
+            }
+
+            return encodedString;
+        }
+
+        return function (url) {
+            var xhr = new XMLHttpRequest(), self = this;
+            this.url = url;
+
+            this.success = function (callback) {
+                this.onSuccess = callback;
+
+                return this;
+            };
+
+            this.error = function (callback) {
+                this.onError = callback;
+
+                return this;
+            };
+
+            this.post = function (data) {
+                xhr.open('POST', this.url);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+
+                xhr.onreadystatechange = function () {
+                    if (4 === xhr.readyState) {
+                        if (200 === xhr.status) {
+                            self.onSuccess.call(self, xhr.responseText);
+                        }  else {
+                            self.onError.call(self, xhr);
+                        }
+                    }
+                };
+
+                xhr.send(params(data));
+            }
+        }
+    })();
+
     var Message = (function () {
 
         var Message = function () {
@@ -191,23 +242,13 @@ var DevApplication = (function () {
             }
 
             if (Config.data.submitPath) {
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () {
-                    if (4 === xhr.readyState) {
-                      if (200 === xhr.status) {
-                        if (xhr.responseText) {
-                            _printSuccess(xhr.responseText);
-                        }
-
-                        _printSuccess(Config.data.messages.success.finish);
-                      } else {
-
-                      }
+                new Request(Config.data.submitPath).success(function (data) {
+                    if (data) {
+                        _printSuccess(data);
                     }
-                };
-                xhr.open('POST', Config.data.submitPath);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-                xhr.send(encodeURI('cv=' + data.cv));
+
+                    _printSuccess(Config.data.messages.success.finish);
+                }).post(data);
             } else {
                 _printSuccess(Config.data.messages.success.finish);
             }

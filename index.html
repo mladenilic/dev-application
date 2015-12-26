@@ -2,12 +2,19 @@
 <html>
 <head>
     <script src="dev-application.js"></script>
-    <title>Job Application script example</title>
+    <title>Dev Application script example</title>
 </head>
 <body>
     <h1>Open console</h1>
     <script>
-        var testApplication = new DevApplication();
+        var TestApplication = new DevApplication({
+            messages: {
+                welcome: {
+                    title: 'Test Application demo',
+                    content: ['Type TestApplication.about();']
+                }
+            }
+        });
     </script>
 </body>
 </html>

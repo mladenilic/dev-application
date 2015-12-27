@@ -16,9 +16,12 @@ All you need to do is include ```dev-application.js``` into your website header 
 
 Everything else is handled by "Dev Application".
 
-## Check out examples in order to use and customise the application process
+## See examples in order to customise the application process
 
 ### Initialise app and customise messages
+
+This first example is showing you all the options you can use in order to cutomize the output, while second one would be more like something you would use in real life.
+
 ```
 var Acme = new DevApplication({
     messages: {

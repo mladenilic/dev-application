@@ -73,7 +73,7 @@ var DevApplication = (function () {
             });
 
             return encodedString;
-        }
+        };
 
         return function (url) {
             var xhr = new XMLHttpRequest(), self = this;
@@ -106,13 +106,13 @@ var DevApplication = (function () {
                 };
 
                 xhr.send(params(data));
-            }
-        }
+            };
+        };
     })();
 
     var Message = (function () {
 
-        var Message = function () {
+        return function () {
             var defaultText = '', messageStyles = {};
 
             this.print = function (text) {
@@ -142,14 +142,8 @@ var DevApplication = (function () {
                 messageStyles = styles;
 
                 return this;
-            }
+            };
         };
-
-        return {
-            new: function () {
-                return new Message();
-            }
-        }
 
     })();
 
@@ -165,13 +159,13 @@ var DevApplication = (function () {
         const FLAG_CAN_FINISH = FLAG_CAN_ADD_CV | FLAG_ADD_CV;
 
         var _printTitle = function (title) {
-            Message.new().style('color', Config.data.styles.color.title)
+            new Message().style('color', Config.data.styles.color.title)
                 .style('font-size', Config.data.styles.size.title)
                 .print(title);
         };
 
         var _printMessages = function (messages) {
-            var message = Message.new().styles({
+            var message = new Message().styles({
                 'color': Config.data.styles.color.default,
                 'font-size': Config.data.styles.size.default
             });
@@ -183,7 +177,7 @@ var DevApplication = (function () {
 
         var _printError = function (message) {
             var errorMessages = Config.data.messages.error.default;
-            Message.new().styles({
+            new Message().styles({
                 'color': Config.data.styles.color.error,
                 'font-size': Config.data.styles.size.default
             }).print(message || errorMessages[Math.floor(Math.random() * errorMessages.length)]);
@@ -191,7 +185,7 @@ var DevApplication = (function () {
 
         var _printSuccess = function (message) {
             var successMessages = Config.data.messages.success.default;
-            Message.new().styles({
+            new Message().styles({
                 'color': Config.data.styles.color.success,
                 'font-size': Config.data.styles.size.default
             })

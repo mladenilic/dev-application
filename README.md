@@ -1,3 +1,5 @@
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+
 # Easily invite amazing developers to join your team
 
 Lets face it. Companies are facing hard times when wanting to hire amazing developers. Everybody claims they hire "rock stars", however, there is so much rubbish code out there, and situation is getting worse.

@@ -1,4 +1,6 @@
 var DevApplication = (function () {
+    'use strinct';
+
     var Config = (function () {
 
         var config = {

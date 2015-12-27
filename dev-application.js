@@ -40,14 +40,14 @@ var DevApplication = (function () {
         };
 
         var merge = function(dest, src) {
-            for (var property in src) {
-                if (src[property] && src[property].constructor && src[property].constructor === Object) {
-                  dest[property] = dest[property] || {};
-                  arguments.callee(dest[property], src[property]);
+            Object.keys(src).forEach(function (i) {
+                if (src[i] && src[i].constructor && src[i].constructor === Object) {
+                  dest[i] = dest[i] || {};
+                  merge(dest[i], src[i]);
                 } else {
-                  dest[property] = src[property];
+                  dest[i] = src[i];
                 }
-            }
+            });
 
             return dest;
         };
@@ -65,14 +65,12 @@ var DevApplication = (function () {
 
         var params = function (object) {
             var encodedString = '';
-            for (var prop in object) {
-                if (object.hasOwnProperty(prop)) {
-                    if (encodedString.length > 0) {
+            Object.keys(object).forEach(function (i) {
+                if (encodedString.length > 0) {
                         encodedString += '&';
                     }
                     encodedString += encodeURI(prop + '=' + object[prop]);
-                }
-            }
+            });
 
             return encodedString;
         }
@@ -119,9 +117,9 @@ var DevApplication = (function () {
 
             this.print = function (text) {
                 var computedStyles = '';
-                for (var i in messageStyles) {
+                Object.keys(messageStyles).forEach(function (i) {
                     computedStyles += i + ': ' + messageStyles[i] + ';';
-                }
+                });
 
                 console.log('%c' + text || defaultText, computedStyles);
 

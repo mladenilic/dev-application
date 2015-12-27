@@ -170,9 +170,9 @@ var DevApplication = (function () {
                 'font-size': Config.data.styles.size.default
             });
 
-            for (var i = 0; i < messages.length; i++) {
-                message.print(messages[i]);
-            };
+            messages.forEach(function (text) {
+                message.print(text);
+            });
         };
 
         var _printError = function (message) {

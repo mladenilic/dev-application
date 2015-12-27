@@ -39,13 +39,13 @@ var DevApplication = (function () {
             }
         };
 
-        var merge = function(dest, src) {
+        var merge = function (dest, src) {
             Object.keys(src).forEach(function (i) {
                 if (src[i] && src[i].constructor && src[i].constructor === Object) {
-                  dest[i] = dest[i] || {};
-                  merge(dest[i], src[i]);
+                    dest[i] = dest[i] || {};
+                    merge(dest[i], src[i]);
                 } else {
-                  dest[i] = src[i];
+                    dest[i] = src[i];
                 }
             });
 
@@ -67,9 +67,9 @@ var DevApplication = (function () {
             var encodedString = '';
             Object.keys(object).forEach(function (i) {
                 if (encodedString.length > 0) {
-                        encodedString += '&';
-                    }
-                    encodedString += encodeURI(prop + '=' + object[prop]);
+                    encodedString += '&';
+                }
+                encodedString += encodeURI(i + '=' + object[i]);
             });
 
             return encodedString;
@@ -181,7 +181,7 @@ var DevApplication = (function () {
                 'color': Config.data.styles.color.error,
                 'font-size': Config.data.styles.size.default
             }).print(message || errorMessages[Math.floor(Math.random() * errorMessages.length)]);
-        }
+        };
 
         var _printSuccess = function (message) {
             var successMessages = Config.data.messages.success.default;
@@ -190,7 +190,7 @@ var DevApplication = (function () {
                 'font-size': Config.data.styles.size.default
             })
             .print(message || successMessages[Math.floor(Math.random() * successMessages.length)]);
-        }
+        };
 
         this.about = function () {
             _printMessages(Config.data.messages.about);
@@ -256,5 +256,5 @@ var DevApplication = (function () {
         _printMessages(Config.data.messages.welcome.content);
 
         statusFlag |= FLAG_INIT;
-    }
+    };
 })();

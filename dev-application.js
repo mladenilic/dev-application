@@ -57,7 +57,7 @@ var DevApplication = (function () {
                 config = merge(config, options);
             },
             data: config
-        }
+        };
 
     })();
 

@@ -40,7 +40,7 @@ var DevApplication = (function () {
         };
 
         var merge = function (dest, src) {
-            Object.keys(src).forEach(function (i) {
+            Object.keys(src || {}).forEach(function (i) {
                 if (src[i] && src[i].constructor && src[i].constructor === Object) {
                     dest[i] = dest[i] || {};
                     merge(dest[i], src[i]);

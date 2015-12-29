@@ -1,6 +1,6 @@
 # Dev Application
 
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![Build Status](https://travis-ci.org/mladenilic/dev-application.svg)](https://travis-ci.org/mladenilic/dev-application) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 # Easily invite amazing developers to join your team
 

@@ -16,6 +16,9 @@
     "type": "git",
     "url": "https://github.com/mladenilic/dev-application.git"
   },
+  "scripts": {
+    "test": "grunt jasmine"
+  },
   "homepage": "",
   "license": "MIT"
 }

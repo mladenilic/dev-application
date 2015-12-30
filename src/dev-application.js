@@ -194,22 +194,25 @@ var DevApplication = (function () {
 
         this.about = function () {
             _printMessages(Config.data.messages.about);
+
+            return true;
         };
 
         this.start = function () {
             if (statusFlag & FLAG_START) {
                 _printError(Config.data.messages.error.started);
-                return;
+                return false;
             }
 
             _printSuccess(Config.data.messages.success.start);
             statusFlag |= FLAG_START;
+            return 0;
         };
 
         this.addCv = function (url) {
             if ((statusFlag & FLAG_CAN_ADD_CV) !== FLAG_CAN_ADD_CV) {
                 _printError(Config.data.messages.error.start);
-                return;
+                return false;
             }
 
             data.cv = url;
@@ -217,22 +220,24 @@ var DevApplication = (function () {
             if (!data.cv) {
                _printError(Config.data.messages.error.cv);
                statusFlag &= ~FLAG_ADD_CV;
-               return;
+               return false;
             }
 
             _printSuccess(Config.data.messages.success.cv);
             statusFlag |= FLAG_ADD_CV;
+
+            return true;
         };
 
         this.finish = function () {
             if ((statusFlag & FLAG_CAN_FINISH) !== FLAG_CAN_FINISH) {
                 _printError(Config.data.messages.error.finish);
-                return;
+                return false;
             }
 
             if (statusFlag & FLAG_FINISH) {
                 _printError(Config.data.messages.error.finished);
-                return;
+                return false;
             }
 
             if (Config.data.submitPath) {
@@ -248,6 +253,8 @@ var DevApplication = (function () {
             }
 
             statusFlag |= FLAG_FINISH;
+
+            return true;
         };
 
         Config.init(options);

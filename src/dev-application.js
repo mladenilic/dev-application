@@ -150,10 +150,10 @@ var DevApplication = (function () {
     return function (options) {
         var statusFlag = 0, data = {};
 
-        const FLAG_INIT = 0b00000001;
-        const FLAG_START = 0b00000010;
-        const FLAG_ADD_CV = 0b00000100;
-        const FLAG_FINISH = 0b00001000;
+        const FLAG_INIT = 0x01;
+        const FLAG_START = 0x02;
+        const FLAG_ADD_CV = 0x04;
+        const FLAG_FINISH = 0x08;
 
         const FLAG_CAN_ADD_CV = FLAG_INIT | FLAG_START;
         const FLAG_CAN_FINISH = FLAG_CAN_ADD_CV | FLAG_ADD_CV;

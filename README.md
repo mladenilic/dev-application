@@ -26,7 +26,7 @@ Everything else is handled by "Dev Application".
 
 This first example is showing you all the options you can use in order to cutomize the output, while second one would be more like something you would use in real life.
 
-```
+```js
 var Acme = new DevApplication({
     messages: {
         welcome: {
@@ -56,7 +56,7 @@ var Acme = new DevApplication({
 
 Of course, the idea is not to write everything out to a user unless if you are looking for a complete beginner. An initial hint where they can find object by showing first function ```Acme.about()``` should be just enough for experienced developer to find available functions and go through the process on their own. In real-life scenario, we would customize messages not to render all the functions.
 
-```
+```js
 var Acme = new DevApplication({
     messages: {
         welcome: {

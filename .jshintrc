@@ -1,0 +1,16 @@
+{
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "undef": true,
+  "browser": true,
+  "bitwise": false,
+  "nonew": true,
+  "esnext": true,
+  "globals": {
+    "console": true
+  }
+}

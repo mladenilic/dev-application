@@ -59,7 +59,7 @@ var DevApplication = (function () {
             data: config
         };
 
-    })();
+    }());
 
     var Request = (function () {
 
@@ -99,7 +99,7 @@ var DevApplication = (function () {
                     if (4 === xhr.readyState) {
                         if (200 === xhr.status) {
                             self.onSuccess.call(self, xhr.responseText);
-                        }  else {
+                        } else {
                             self.onError.call(self, xhr);
                         }
                     }
@@ -108,7 +108,7 @@ var DevApplication = (function () {
                 xhr.send(params(data));
             };
         };
-    })();
+    }());
 
     var Message = (function () {
 
@@ -145,13 +145,13 @@ var DevApplication = (function () {
             };
         };
 
-    })();
+    }());
 
     return function (options) {
         var statusFlag = 0, data = {};
 
-        const FLAG_INIT   = 0b00000001;
-        const FLAG_START  = 0b00000010;
+        const FLAG_INIT = 0b00000001;
+        const FLAG_START = 0b00000010;
         const FLAG_ADD_CV = 0b00000100;
         const FLAG_FINISH = 0b00001000;
 
@@ -257,4 +257,4 @@ var DevApplication = (function () {
 
         statusFlag |= FLAG_INIT;
     };
-})();
+}());

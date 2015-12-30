@@ -206,7 +206,7 @@ var DevApplication = (function () {
 
             _printSuccess(Config.data.messages.success.start);
             statusFlag |= FLAG_START;
-            return 0;
+            return true;
         };
 
         this.addCv = function (url) {

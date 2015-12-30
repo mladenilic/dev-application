@@ -1,7 +1,5 @@
 module.exports = function (grunt) {
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
+    'use strict';
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -16,13 +14,17 @@ module.exports = function (grunt) {
             src: 'src/<%= pkg.name %>.js'
         },
 
-        jasmine : {
-            src : 'src/src/<%= pkg.name %>.js',
-            options : {
-                specs : 'spec/src/<%= pkg.name %>-spec.js'
+        jasmine: {
+            src: 'src/<%= pkg.name %>.js',
+            options: {
+                specs: 'spec/**/*.js'
             }
-        },
+        }
     });
+
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     grunt.registerTask('default', 'watch');
 };

@@ -1,6 +1,6 @@
 # Dev Application
 
-[![Build Status](https://travis-ci.org/mladenilic/dev-application.svg)](https://travis-ci.org/mladenilic/dev-application) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![Build Status](https://travis-ci.org/mladenilic/dev-application.svg)](https://travis-ci.org/mladenilic/dev-application) [![Codacy Badge](https://api.codacy.com/project/badge/grade/9a01f7c04845480780f33bf21b1c91bd)](https://www.codacy.com/app/mladenilic480/dev-application) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 # Easily invite amazing developers to join your team
 

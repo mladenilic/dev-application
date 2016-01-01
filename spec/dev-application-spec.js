@@ -7,11 +7,11 @@ describe('Dev application spec', function() {
     TestApplication = new DevApplication();
   });
 
-  it('should not be able to print about', function() {
+  it('should be able to print about', function() {
     expect(TestApplication.about()).toBe(true);
   });
 
-  it('should not be able to start application', function() {
+  it('should be able to start application', function() {
     expect(TestApplication.start()).toBe(true);
   });
 

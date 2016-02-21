@@ -68,5 +68,10 @@ var Acme = new DevApplication({
 });
 ```
 
+### Run with Docker
+
+1. Install docker
+2. `docker build -t dev-application .`
+3. `docker run -d --name dev-application -p 80:80 dev-application`
 
 To stay up to date - _Click "Watch" in top right corner._
